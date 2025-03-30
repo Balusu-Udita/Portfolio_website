@@ -9,28 +9,28 @@ def initialize_data():
     if Project.query.count() == 0:
         projects = [
             Project(
-                title="Food Delivery Website",
-                description="A food delivery platform with a unique feature for food donation to help reduce food waste and support those in need.",
-                features="Online food ordering, Food donation option, User authentication, Restaurant listings",
-                technologies="HTML, CSS, JavaScript, Python",
-                image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-                project_url="#"
+                title="Bill Management System",
+                description="A comprehensive Python-based billing system designed to efficiently manage invoices, track payments, and generate detailed financial reports for businesses of all sizes.",
+                features="Invoice generation, Payment tracking, Financial reporting, Client management, PDF export",
+                technologies="Python, SQLite, Tkinter, ReportLab, PyPDF2",
+                image_url="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                project_url="https://github.com/"
             ),
             Project(
                 title="Student Project Guidance Website",
                 description="A platform designed to help undergraduate students find guidance and resources for their academic projects.",
                 features="Project database, Mentor matching, Resource library, Discussion forums",
                 technologies="HTML, CSS, JavaScript, Python",
-                image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-                project_url="#"
+                image_url="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                project_url="https://github.com/"
             ),
             Project(
                 title="Python Chatbot",
                 description="An intelligent chatbot built using Python that can answer questions and provide assistance to users.",
                 features="Natural language processing, Contextual responses, Knowledge base integration",
                 technologies="Python, NLP, Machine Learning",
-                image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-                project_url="#"
+                image_url="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                project_url="https://github.com/"
             )
         ]
         
@@ -46,49 +46,49 @@ def initialize_data():
                 issuer="Infosys",
                 date="Nov 2024",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             ),
             Certificate(
                 title="Android Developer Virtual Internship",
                 issuer="AICTE",
                 date="Sep 2024",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             ),
             Certificate(
                 title="Tihan - Basics of Autonomous Drones",
                 issuer="TSSC",
                 date="Sep 2024",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             ),
             Certificate(
                 title="Automation Explorer",
                 issuer="UiPath",
                 date="Jul 2024",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             ),
             Certificate(
                 title="Introduction to Generative AI",
                 issuer="Google Cloud Skills Boost",
                 date="May 2024",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             ),
             Certificate(
                 title="NPTEL - C Programming",
                 issuer="IIT Kharagpur",
                 date="May 2024",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             ),
             Certificate(
                 title="Cisco Networking Academy",
                 issuer="Cisco",
                 date="Aug 2023",
                 image_url="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-                certificate_url="#"
+                certificate_url="https://www.linkedin.com/in/balusu-udita-230a44283/"
             )
         ]
         

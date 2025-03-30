@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="blog-section">
+    <div class="container">
+        <h1 class="section-title">My Blog</h1>
+        <p class="section-description">Welcome to my blog where I share my thoughts, experiences, and insights.</p>
+        
+        <div class="blog-actions">
+            <a href="{{ url_for('new_blog_post') }}" class="btn btn-primary">Create New Post</a>
+        </div>
+        
+        {% if posts %}
+        <div class="blog-posts">
+            {% for post in posts %}
+            <div class="blog-card">
+                {% if post.image_url %}
+                <div class="blog-card-image">
+                    <img src="{{ post.image_url }}" alt="{{ post.title }}">
+                </div>
+                {% endif %}
+                <div class="blog-card-content">
+                    <h2 class="blog-card-title">{{ post.title }}</h2>
+                    <div class="blog-card-date">{{ post.created_at.strftime('%B %d, %Y') }}</div>
+                    {% if post.summary %}
+                    <p class="blog-card-summary">{{ post.summary }}</p>
+                    {% else %}
+                    <p class="blog-card-summary">{{ post.content|truncate(150) }}</p>
+                    {% endif %}
+                    <a href="{{ url_for('blog_post', slug=post.slug) }}" class="btn btn-outline">Read More</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-pen-fancy"></i>
+            <p>No blog posts yet. Be the first to create one!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

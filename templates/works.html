@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="works-section">
+    <div class="container">
+        <h1 class="section-title">My Works</h1>
+        <p class="section-description">Here you can find my notes, references, and other resources.</p>
+        
+        <div class="works-actions">
+            <a href="{{ url_for('new_work') }}" class="btn btn-primary">Upload New Work</a>
+        </div>
+        
+        {% if work_items %}
+        <div class="works-grid">
+            {% for work in work_items %}
+            <div class="work-card">
+                <div class="work-card-icon">
+                    {% if work.file_type == 'pdf' %}
+                    <i class="far fa-file-pdf"></i>
+                    {% elif work.file_type in ['docx', 'doc'] %}
+                    <i class="far fa-file-word"></i>
+                    {% elif work.file_type in ['ppt', 'pptx'] %}
+                    <i class="far fa-file-powerpoint"></i>
+                    {% elif work.file_type in ['xlsx', 'xls'] %}
+                    <i class="far fa-file-excel"></i>
+                    {% elif work.file_type in ['zip', 'rar'] %}
+                    <i class="far fa-file-archive"></i>
+                    {% else %}
+                    <i class="far fa-file-alt"></i>
+                    {% endif %}
+                </div>
+                <div class="work-card-content">
+                    <h3 class="work-card-title">{{ work.title }}</h3>
+                    <p class="work-card-date">{{ work.created_at.strftime('%B %d, %Y') }}</p>
+                    {% if work.description %}
+                    <p class="work-card-description">{{ work.description|truncate(100) }}</p>
+                    {% endif %}
+                    <div class="work-card-footer">
+                        <a href="{{ work.file_url }}" class="btn btn-outline" target="_blank" download>Download</a>
+                        <span class="work-card-type">{{ work.file_type|upper }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-file-upload"></i>
+            <p>No works uploaded yet. Be the first to upload one!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

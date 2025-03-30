@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="new-work-section">
+    <div class="container">
+        <h1 class="section-title">Edit Work</h1>
+        
+        <div class="work-navigation">
+            <a href="{{ url_for('works') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Works</a>
+        </div>
+        
+        <form class="work-form" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="{{ work.title }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description (optional)</label>
+                <textarea id="description" name="description" rows="4" placeholder="A brief description of your work">{{ work.description }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="file">File Upload</label>
+                {% if work.file_url %}
+                <div class="current-file">
+                    <p>Current file: <a href="{{ work.file_url }}" target="_blank">{{ work.title }}.{{ work.file_type }}</a></p>
+                </div>
+                {% endif %}
+                <input type="file" id="file" name="file">
+                <p class="form-help">Upload a new file to replace the current one. Leave empty to keep current file.</p>
+                <p class="form-help">Supported formats: PDF, DOCX, DOC, TXT, PPT, PPTX, XLSX, XLS, ZIP, RAR</p>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Update Work</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

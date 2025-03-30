@@ -916,6 +916,23 @@ footer {
 /* Blog Post Page */
 .blog-post-navigation {
     margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.blog-post-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
 }
 
 .blog-post {
@@ -1073,6 +1090,11 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.work-card-actions {
+    display: flex;
+    gap: 8px;
 }
 
 .work-card-type {

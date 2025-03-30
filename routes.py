@@ -1,7 +1,6 @@
 from flask import render_template, request, jsonify, flash, redirect, url_for
-from app import app, db, mail
+from app import app, db
 from models import Project, Certificate, Message, BlogPost, Work
-from flask_mail import Message as MailMessage
 import logging
 import os
 from werkzeug.utils import secure_filename
@@ -204,26 +203,12 @@ def contact():
         db.session.add(new_message)
         db.session.commit()
         
-        # Send email
-        try:
-            msg = MailMessage(
-                subject=f"Portfolio Contact: {subject}",
-                recipients=[app.config['MAIL_USERNAME']],
-                body=f"From: {name} <{email}>\n\n{message_content}",
-                sender=app.config['MAIL_DEFAULT_SENDER']
-            )
-            mail.send(msg)
-            logging.debug(f"Email sent successfully from {email}")
-        except Exception as e:
-            logging.error(f"Failed to send email: {e}")
-            # Continue execution - the message is still saved to database
-        
-        flash('Your message has been sent successfully!', 'success')
+        flash('Your message has been saved successfully!', 'success')
         return redirect(url_for('index', _anchor='contact'))
     
     except Exception as e:
         logging.error(f"Error in contact form submission: {e}")
-        flash('An error occurred while sending your message. Please try again.', 'error')
+        flash('An error occurred while saving your message. Please try again.', 'error')
         return redirect(url_for('index', _anchor='contact'))
 
 # API routes for dynamic content
@@ -309,6 +294,52 @@ def blog_post(slug):
     post = BlogPost.query.filter_by(slug=slug).first_or_404()
     return render_template('blog_post.html', post=post)
 
+@app.route('/blog/edit/<int:post_id>', methods=['GET', 'POST'])
+def edit_blog_post(post_id):
+    """Edit an existing blog post"""
+    post = BlogPost.query.get_or_404(post_id)
+    
+    if request.method == 'POST':
+        # Update post data
+        post.title = request.form.get('title')
+        post.content = request.form.get('content')
+        post.summary = request.form.get('summary')
+        
+        # Handle image upload if provided
+        if 'image' in request.files and request.files['image'].filename:
+            image_file = request.files['image']
+            if allowed_image_file(image_file.filename):
+                # Generate secure filename and save
+                filename = secure_filename(image_file.filename)
+                file_ext = filename.rsplit('.', 1)[1].lower()
+                unique_filename = f"{post.title.lower().replace(' ', '_')}_{int(datetime.utcnow().timestamp())}.{file_ext}"
+                file_path = os.path.join(BLOG_IMAGES_FOLDER, unique_filename)
+                image_file.save(file_path)
+                
+                # Update image URL
+                post.image_url = f"/static/uploads/blog/{unique_filename}"
+        
+        # Generate new slug and save
+        post.generate_slug()
+        db.session.commit()
+        
+        flash('Your blog post has been updated!', 'success')
+        return redirect(url_for('blog_post', slug=post.slug))
+    
+    return render_template('edit_blog_post.html', post=post)
+
+@app.route('/blog/delete/<int:post_id>', methods=['POST'])
+def delete_blog_post(post_id):
+    """Delete a blog post"""
+    post = BlogPost.query.get_or_404(post_id)
+    
+    # Delete the post
+    db.session.delete(post)
+    db.session.commit()
+    
+    flash('Your blog post has been deleted!', 'success')
+    return redirect(url_for('blog'))
+
 @app.route('/api/blog_posts', methods=['GET'])
 def get_blog_posts():
     """API endpoint for blog posts"""
@@ -359,6 +390,51 @@ def new_work():
         return redirect(url_for('works'))
     
     return render_template('new_work.html')
+
+@app.route('/works/edit/<int:work_id>', methods=['GET', 'POST'])
+def edit_work(work_id):
+    """Edit an existing work item"""
+    work = Work.query.get_or_404(work_id)
+    
+    if request.method == 'POST':
+        # Update work data
+        work.title = request.form.get('title')
+        work.description = request.form.get('description')
+        
+        # Handle file upload if provided
+        if 'file' in request.files and request.files['file'].filename:
+            file = request.files['file']
+            if allowed_work_file(file.filename):
+                # Generate secure filename and save
+                filename = secure_filename(file.filename)
+                file_ext = filename.rsplit('.', 1)[1].lower()
+                unique_filename = f"{work.title.lower().replace(' ', '_')}_{int(datetime.utcnow().timestamp())}.{file_ext}"
+                file_path = os.path.join(WORKS_FILES_FOLDER, unique_filename)
+                file.save(file_path)
+                
+                # Update file URL and type
+                work.file_url = f"/static/uploads/works/{unique_filename}"
+                work.file_type = file_ext
+        
+        # Save changes
+        db.session.commit()
+        
+        flash('Your work has been updated!', 'success')
+        return redirect(url_for('works'))
+    
+    return render_template('edit_work.html', work=work)
+
+@app.route('/works/delete/<int:work_id>', methods=['POST'])
+def delete_work(work_id):
+    """Delete a work item"""
+    work = Work.query.get_or_404(work_id)
+    
+    # Delete the work
+    db.session.delete(work)
+    db.session.commit()
+    
+    flash('Your work has been deleted!', 'success')
+    return redirect(url_for('works'))
 
 @app.route('/api/works', methods=['GET'])
 def get_works():

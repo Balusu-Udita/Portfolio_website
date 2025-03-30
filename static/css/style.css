@@ -1037,19 +1037,21 @@ footer {
 /* Works Styles */
 .works-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
 }
 
 .work-card {
     background-color: var(--card-bg);
     border-radius: var(--border-radius);
-    padding: 25px;
+    padding: 22px;
     box-shadow: var(--shadow);
     transition: var(--transition);
     display: flex;
     align-items: flex-start;
     gap: 20px;
+    height: 100%;
+    overflow: hidden;
 }
 
 .work-card:hover {
@@ -1058,23 +1060,29 @@ footer {
 }
 
 .work-card-icon {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     color: var(--primary-color);
-    width: 60px;
+    min-width: 50px;
     text-align: center;
 }
 
 .work-card-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .work-card-title {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
 }
 
 .work-card-date {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
@@ -1083,27 +1091,46 @@ footer {
     color: var(--text-color);
     opacity: 0.9;
     margin-bottom: 15px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .work-card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
 }
 
 .work-card-actions {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.8rem;
 }
 
 .work-card-type {
     font-size: 0.7rem;
     background-color: rgba(153, 188, 133, 0.2);
-    padding: 3px 8px;
+    padding: 4px 8px;
     border-radius: 4px;
     color: var(--secondary-color);
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .work-navigation {
@@ -1130,11 +1157,21 @@ footer {
     }
     
     .works-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
     
     .blog-post {
         padding: 25px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .works-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .work-card {
+        padding: 18px;
     }
 }
 
